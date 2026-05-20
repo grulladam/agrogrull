@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Agro Grüll</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--green:#1D9E75;--gd:#0F6E56;--gb:#E1F5EE;--red:#D85A30;--rd:#993C1D;--rb:#FAECE7;--blue:#378ADD;--bd:#185FA5;--bb:#E6F1FB;--bor:#E5E3DC;--bg:#F7F6F2;--bg2:#EFEDE8;--txt:#1A1917;--txt2:#6B6860;--r:12px;--sh:0 2px 12px rgba(0,0,0,0.08)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Georgia,serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.hdr{background:white;border-bottom:1px solid var(--bor);padding:13px 16px;display:flex;align-items:center;gap:11px;position:sticky;top:0;z-index:100;box-shadow:var(--sh)}
+.logo{width:40px;height:40px;border-radius:10px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo i{color:white;font-size:21px}
+.ht{font-size:17px;font-weight:700;letter-spacing:-0.3px}
+.hs{font-size:11px;color:var(--txt2);font-family:sans-serif}
+.wm{margin-left:auto;background:var(--bb);border:1.5px solid var(--blue);border-radius:10px;padding:5px 10px;text-align:center;min-width:68px}
+.wmt{font-size:17px;font-weight:700;color:var(--bd);font-family:sans-serif;line-height:1.2}
+.wml{font-size:10px;color:var(--bd);font-family:sans-serif}
+.nav{background:white;border-bottom:1px solid var(--bor);display:flex}
+.nb{flex:1;padding:13px 6px;border:none;background:transparent;font-size:12px;font-weight:700;color:var(--txt2);border-bottom:3px solid transparent;cursor:pointer;font-family:sans-serif;white-space:nowrap}
+.nb.on{color:var(--green);border-bottom-color:var(--green)}
+.pg{display:none}.pg.on{display:block}
+.inn{padding:14px 14px 30px;max-width:600px;margin:0 auto}
+.ldr{text-align:center;padding:50px 20px;font-family:sans-serif}
+.ldr .sp{font-size:36px;animation:spin 1.5s linear infinite;display:inline-block;margin-bottom:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ldr p{color:var(--txt2);font-size:13px}
+.yr{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.yb{padding:8px 16px;border-radius:20px;border:1.5px solid var(--bor);font-size:13px;font-weight:700;cursor:pointer;background:white;color:var(--txt2);font-family:sans-serif}
+.yb.on{background:var(--green);color:white;border-color:var(--green)}
+.yb.all{border-color:var(--green);color:var(--green)}
+.yb.all.on{background:var(--green);color:white}
+.yh{font-size:11px;color:var(--txt2);font-family:sans-serif;align-self:center}
+.mc4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.mc{border-radius:var(--r);padding:13px 14px;border:2px solid transparent;background:white;position:relative;overflow:hidden;box-shadow:var(--sh)}
+.mc.g{border-color:var(--green);background:var(--gb)}.mc.g .val{color:var(--gd)}
+.mc.r{border-color:var(--red);background:var(--rb)}.mc.r .val{color:var(--rd)}
+.mc.b{border-color:var(--blue);background:var(--bb)}.mc.b .val{color:var(--bd)}
+.mc .lbl{font-size:10px;font-weight:700;color:var(--txt2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;font-family:sans-serif}
+.mc .val{font-size:15px;font-weight:700;line-height:1.2;font-family:sans-serif}
+.mc .sub{font-size:10px;color:var(--txt2);margin-top:3px;font-family:sans-serif}
+.mc .ico{position:absolute;top:11px;right:11px;font-size:19px;opacity:.18}
+.cc{background:white;border:1px solid var(--bor);border-radius:var(--r);padding:13px;margin-bottom:11px;box-shadow:var(--sh)}
+.ct{font-size:10px;font-weight:700;color:var(--txt2);margin-bottom:9px;text-transform:uppercase;letter-spacing:.06em;font-family:sans-serif}
+.lg{display:flex;gap:10px;margin-bottom:7px;font-size:11px;color:var(--txt2);font-family:sans-serif;font-weight:600;flex-wrap:wrap}
+.lg span{display:flex;align-items:center;gap:4px}
+.ld{width:8px;height:8px;border-radius:2px;display:inline-block}
+.sec{margin-bottom:7px}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--bg2);border-radius:10px;cursor:pointer;user-select:none;border:1px solid var(--bor)}
+.sl{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;font-family:sans-serif}
+.sr{display:flex;align-items:center;gap:7px}
+.sa{font-size:13px;font-weight:700;font-family:sans-serif}
+.sa.k{color:var(--rd)}.sa.bv{color:var(--gd)}
+.chv{transition:transform .25s;font-size:14px;color:var(--txt2)}
+.op .chv{transform:rotate(180deg)}
+.its{display:none;border:1px solid var(--bor);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;background:white}
+.it{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:12px;font-family:sans-serif;border-top:1px solid var(--bor)}
+.id2{color:var(--txt2);min-width:55px;font-size:11px;font-weight:600}
+.in2{flex:1;padding:0 8px;font-weight:500}
+.iv{font-weight:700;white-space:nowrap}
+.iv.k{color:var(--rd)}.iv.bv{color:var(--gd)}
+.mc2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}
+.colt{font-size:10px;font-weight:700;color:var(--txt2);margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid var(--bor);text-transform:uppercase;letter-spacing:.06em;font-family:sans-serif}
+.mys{margin-bottom:9px;border-radius:var(--r);overflow:hidden;border:1px solid var(--bor);box-shadow:var(--sh)}
+.myh{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;background:var(--green);cursor:pointer;user-select:none}
+.myh span{font-size:15px;font-weight:700;color:white;font-family:sans-serif}
+.myh .cnt{font-size:11px;color:rgba(255,255,255,.8);font-family:sans-serif}
+.myh i{color:white;font-size:16px;transition:transform .25s}
+.myh.op i{transform:rotate(180deg)}
+.myb{display:none;background:white}
+.myb.on{display:block}
+.mne{display:flex;gap:11px;padding:11px 15px;border-top:1px solid var(--bor)}
+.mne:first-child{border-top:none}
+.mnd{font-size:11px;font-weight:700;color:var(--txt2);min-width:58px;padding-top:2px;font-family:sans-serif}
+.mnb{flex:1}
+.mnt{font-size:13px;font-weight:500;line-height:1.5;font-family:sans-serif}
+.mnn{font-size:11px;color:var(--bd);margin-top:4px;font-style:italic;font-family:sans-serif;background:var(--bb);padding:4px 8px;border-radius:6px}
+.mnc{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-bottom:4px;font-weight:700;font-family:sans-serif}
+.cv{background:#E6F1FB;color:#0C447C}.ca{background:#FAEEDA;color:#633806}
+.cve{background:#EAF3DE;color:#27500A}.cp{background:#FBEAF0;color:#72243E}.ce{background:#F1EFE8;color:#444441}
+.mf{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px}
+.mfb{padding:7px 13px;border-radius:20px;border:1.5px solid var(--bor);font-size:12px;font-weight:700;cursor:pointer;background:white;color:var(--txt2);font-family:sans-serif}
+.mfb.on{background:var(--green);color:white;border-color:var(--green)}
+.wcard{background:white;border-radius:var(--r);border:1.5px solid var(--blue);overflow:hidden;box-shadow:var(--sh)}
+.wch{background:var(--bb);padding:11px 15px;display:flex;align-items:center;gap:7px}
+.wch i{color:var(--bd);font-size:17px}
+.wch span{font-size:12px;font-weight:700;color:var(--bd);font-family:sans-serif;text-transform:uppercase;letter-spacing:.05em}
+.wcb{padding:14px 15px}
+.wcn{display:flex;align-items:center;gap:15px;margin-bottom:13px}
+.wcte{font-size:44px;font-weight:700;color:var(--bd);line-height:1;font-family:sans-serif}
+.wcd{font-size:14px;font-weight:600;margin-bottom:3px;font-family:sans-serif}
+.wcdt{font-size:12px;color:var(--txt2);font-family:sans-serif}
+.wcf{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.wcd2{background:var(--bg);border-radius:8px;padding:8px 4px;text-align:center;font-family:sans-serif}
+.wcdn{font-size:10px;color:var(--txt2);font-weight:700;text-transform:uppercase;margin-bottom:3px}
+.wcdi{font-size:17px;margin-bottom:2px}
+.wcdt2{font-size:13px;font-weight:700}
+.wcdm{font-size:11px;color:var(--txt2)}
+.rain-bar-wrap{display:flex;flex-direction:column;align-items:center;margin-top:5px;height:42px;justify-content:flex-end}
+.rain-bar{width:14px;background:#378ADD;border-radius:3px 3px 0 0;min-height:0;transition:height .3s}
+.rain-val{font-size:9px;color:var(--bd);font-family:sans-serif;font-weight:700;margin-top:2px;white-space:nowrap}
+.rain-legend{text-align:center;font-size:11px;color:var(--txt2);font-family:sans-serif;margin-top:10px;padding-top:8px;border-top:1px solid var(--bor)}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo"><i class="ti ti-plant-2"></i></div>
+  <div><div class="ht">Agro Grüll</div><div class="hs">Pénzügyi dashboard</div></div>
+  <div class="wm" id="wm"><div class="wmt">...</div><div class="wml">Peresznye</div></div>
+</div>
+<div class="nav">
+  <button class="nb on" onclick="sp('p',this)"><i class="ti ti-report-money"></i> Pénzügyek</button>
+  <button class="nb" onclick="sp('m',this)"><i class="ti ti-calendar-event"></i> Munkanapló</button>
+  <button class="nb" onclick="sp('w',this)"><i class="ti ti-cloud-rain"></i> Időjárás</button>
+</div>
+
+<div id="pp" class="pg on">
+  <div class="inn">
+    <div id="pl" class="ldr"><div class="sp">🌱</div><p>Adatok betöltése...</p></div>
+    <div id="pc" style="display:none">
+      <div class="yr">
+        <button class="yb all on" id="ba" onclick="ta()">Összes</button>
+        <button class="yb" id="b2023" onclick="ty('2023')">2023</button>
+        <button class="yb" id="b2024" onclick="ty('2024')">2024</button>
+        <button class="yb" id="b2025" onclick="ty('2025')">2025</button>
+        <button class="yb" id="b2026" onclick="ty('2026')">2026</button>
+        <span class="yh" id="yh"></span>
+      </div>
+      <div class="mc4" id="met"></div>
+      <div class="cc">
+        <div class="ct">Bevétel és kiadás évente</div>
+        <div class="lg"><span><span class="ld" style="background:#1D9E75"></span>Bevétel</span><span><span class="ld" style="background:#D85A30"></span>Kiadás</span><span><span class="ld" style="background:#378ADD"></span>Profit</span></div>
+        <div style="position:relative;width:100%;height:220px"><canvas id="c1"></canvas></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px">
+        <div class="cc" style="margin-bottom:0"><div class="ct">Profit megoszlása</div><div style="position:relative;height:155px"><canvas id="c2"></canvas></div></div>
+        <div class="cc" style="margin-bottom:0"><div class="ct">Bev/Kiad arány</div><div style="position:relative;height:155px"><canvas id="c3"></canvas></div></div>
+      </div>
+      <div id="dc"></div>
+      <div class="mc2" id="ds"></div>
+    </div>
+  </div>
+</div>
+
+<div id="pm" class="pg">
+  <div class="inn">
+    <div id="ml2" class="ldr"><div class="sp">🌱</div><p>Munkanapló betöltése...</p></div>
+    <div id="mc2x" style="display:none">
+      <div class="mf">
+        <button class="mfb on" onclick="fm('all',this)">Mind</button>
+        <button class="mfb" onclick="fm('vetés',this)">Vetés</button>
+        <button class="mfb" onclick="fm('permetezés',this)">Permetezés</button>
+        <button class="mfb" onclick="fm('műtrágya',this)">Műtrágya</button>
+        <button class="mfb" onclick="fm('aratás',this)">Aratás</button>
+        <button class="mfb" onclick="fm('egyéb',this)">Egyéb</button>
+      </div>
+      <div id="ml"></div>
+    </div>
+  </div>
+</div>
+
+<div id="pw" class="pg">
+  <div class="inn">
+    <div class="wcard">
+      <div class="wch"><i class="ti ti-map-pin"></i><span>Peresznye, Ausztria</span></div>
+      <div class="wcb" id="wb"><div style="text-align:center;padding:20px;color:var(--txt2);font-family:sans-serif;font-size:13px">⛅ Betöltés...</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API='https://script.google.com/macros/s/AKfycbygopBE6O428DcD5gAzo2JT9dJ_eBvG1XdlCc15PU2h0LTfEIdHxEwWGmxzPDgQnk_7/exec';
+const AY=['2023','2024','2025','2026'];
+const CL={vetés:'cve',permetezés:'cp',műtrágya:'cv',aratás:'ca',egyéb:'ce'};
+const CN={vetés:'Vetés',permetezés:'Permetezés',műtrágya:'Műtrágya',aratás:'Aratás',egyéb:'Egyéb'};
+const WI={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',80:'🌦',81:'🌧',95:'⛈'};
+const WD={0:'Napos',1:'Enyhén felhős',2:'Részben felhős',3:'Borult',45:'Köd',51:'Gyenge eső',53:'Eső',61:'Eső',80:'Zápor',95:'Zivatar'};
+const DN=['V','H','K','Sze','Cs','P','Sz'];
+
+const FB={
+  '2023':{bev:5774137,kiad:4282843,profit:1491294,ki:[{d:'2022.10.22',n:'Komplex Laci – 2×700 kg',v:590000},{d:'2022.12.27',n:'Pétisó 27% – 30.000 kg',v:900000},{d:'2023.02.11',n:'Kénes műtrágya Laci',v:274000},{d:'2023.04.24',n:'Starter – 60 kg, Komplex',v:406905},{d:'2023.05.03',n:'Vetés Borhi + borravaló',v:50000},{d:'2023.06.02',n:'Permetszer kukorica',v:106500},{d:'2023.11.03',n:'Kukorica szárítás',v:859033},{d:'2023.12.31',n:'Banki költségek',v:14286}],be:[{d:'2022.08.23',n:'Búza – Hombár Kft.',v:1996645},{d:'2022.11.24',n:'Kukorica – MEDOSZ Kft.',v:2516909},{d:'2023.05.28',n:'Fiatal mező. támogatás',v:307236}]},
+  '2024':{bev:6681262,kiad:3836003,profit:2845259,ki:[{d:'2023.08.16',n:'NPK – 25q, Pétisó – 36q',v:1043000},{d:'2024.04.10',n:'Vetőmag + Csávázás',v:382632},{d:'2024.05.10',n:'Szója vetőmag Altona',v:300038},{d:'2024.11.06',n:'Kukorica szárítás',v:605615},{d:'2024.12.31',n:'Banki költségek',v:9734}],be:[{d:'2023.10.24',n:'Kukorica – MEDOSZ Kft.',v:3901464},{d:'2023.11.02',n:'Szója – Lagerhaus Kft.',v:1251264}]},
+  '2025':{bev:6955629,kiad:3635847,profit:3319782,ki:[{d:'2024.10.29',n:'Komplex Milán – 24q',v:504000},{d:'2025.04.08',n:'Kukorica vetőmag',v:320000},{d:'2025.10.18',n:'Kukorica szárítás',v:862787},{d:'2025.12.31',n:'Banki költségek',v:10180}],be:[{d:'2025.09.07',n:'Búza – GSD Center Kft.',v:1860824},{d:'2024.10.21',n:'Kukorica – MEDOSZ Kft.',v:3875010}]},
+  '2026':{bev:0,kiad:2054917,profit:-2054917,ki:[{d:'2025.09.19',n:'Műtrágya IKR – 80q',v:1254000},{d:'2026.04.11',n:'Napraforgó vetés Bence',v:90000},{d:'2026.05.07',n:'Permetszer',v:102500}],be:[]}
+};
+const FBMN=[
+  {date:'2022.10.27',text:'Búza vetés (Nádor) – 1.000 kg – 4,48 ha',cat:'vetés'},
+  {date:'2023.05.03',text:'Kukorica vetés 74.000 mag/ha + Pannon Starter Mega',cat:'vetés'},
+  {date:'2025.02.10',text:'Kénes műtrágya első szórás búzára 3 mázsa/ha',cat:'műtrágya'},
+  {date:'2025.04.17',text:'Kukorica vetés – Patrik, 77 ezer mag/ha',cat:'vetés'},
+  {date:'2025.04.24',text:'Búza permetezés – gyomirtó és gombaölő',cat:'permetezés'},
+  {date:'2025.07.22',text:'Búza aratás (Laci – GSD)',cat:'aratás'},
+  {date:'2025.10.17',text:'Kukorica aratás – 10,2–11,7 t/ha, víztartalom 19%',cat:'aratás'},
+  {date:'2025.10.21',text:'Vetés búza (Sofru Milán direkt vetővel)',cat:'vetés'},
+  {date:'2026.02.14',text:'Kénes műtrágya a búzára eső előtt 3 q/ha',cat:'műtrágya'},
+  {date:'2026.04.07',text:'Buza permetezes – gomba ellen Falcon 0,8 l/ha + Gramitrel lombtrágya 2 l/ha',cat:'permetezés'},
+  {date:'2026.04.11',text:'Napraforgó vetés (58.000) Bencével, 10 kg Starterrel',cat:'vetés'},
+  {date:'2026.04.13',text:'Napraforgó permetezés preemergens (Racer 2,5l/ha + Prodalta 1l/ha)',cat:'permetezés'},
+  {date:'2026.04.18',text:'Búza műtrágyaszórás 1,5 q/ha eső előtt, 10 mm esett utána',note:'Karbamid kell őszre a focipályára 100kg = 46kg N, számla után Katalinnak küldjem el.',cat:'műtrágya'},
+  {date:'2026.05.07',text:'Napraforgo: Acat ellen foltokban permeteztünk, ExpressTM 22,5 g/ha + Trend® 90 0,1%.',cat:'permetezés'},
+  {date:'2026.05.07',text:'Búza műtrágyaszórás 1,5 q/ha eső előtt, 20 mm esett utána',cat:'műtrágya'},
+  {date:'2026.05.18',text:'Búza permetezés: Osiris Revy 5L (1 l/ha), gombaölő fuzárium ellen + rovarölő',cat:'permetezés'},
+];
+
+let D={}, MN=[], sel=new Set(AY), iA=true, cM='all', CH={};
+
+function fmt(n){if(Math.abs(n)>=1000000)return (n/1000000).toFixed(2)+' M Ft';return Math.round(n).toLocaleString('hu-HU')+' Ft';}
+function gs(){return AY.filter(y=>sel.has(y));}
+
+function parseSheets(raw){
+  const yr={};
+  const pv=n=>parseFloat(String(n||'').replace(/[^\d.-]/g,''))||0;
+
+  AY.forEach(y=>{
+    const sh=raw[y];
+    if(!sh){yr[y]=FB[y];return;}
+
+    // Struktúra (0-indexed):
+    // row[0] = A, row[1] = B (dátum/kiadás név), row[2] = C (kiadás összeg),
+    // row[3] = D, row[4] = E (bevétel dátum), row[5] = F (bevétel név), row[6] = G (bevétel összeg)
+    // 0. sor: fejléc "Pénzügyi Kimutatás..."
+    // 1. sor: "Kiadás" / "Bevétel" fejléc
+    // 2-25. sor: tételek (index 2-25)
+    // Összeg sorok: ahol B oszlop = "Kiadások", "Bevételek", "Profit", "kumulált profit"
+
+    const ki=[], be=[];
+    let kiadT=0, bevT=0, profT=0, kumT=0;
+
+    sh.forEach((row, i)=>{
+      if(i<2) return; // skip header rows
+      const colB = String(row[1]||'').trim();
+      const colC = pv(row[2]);
+      const colE = String(row[4]||'').trim();
+      const colF = String(row[5]||'').trim();
+      const colG = pv(row[6]);
+      const colA = String(row[0]||'').trim();
+      const colAlow = colA.toLowerCase();
+      const colBlow = colB.toLowerCase();
+
+      // Összeg sorok felismerése – label az A oszlopban van!
+      if(colAlow.startsWith('kiadás') || colAlow.startsWith('kiadások')) {
+        kiadT = colC; return;
+      }
+      if(colAlow.startsWith('bevétel') || colAlow.startsWith('bevételek')) {
+        bevT = colC; return;
+      }
+      if(colAlow.startsWith('profit') && !colAlow.includes('kumulált')) {
+        profT = colC; return;
+      }
+      if(colAlow.includes('kumulált')) {
+        kumT = colC; return;
+      }
+
+      // Kiadás tétel: A=dátum, B=megnevezés, C=összeg (szám)
+      const kiadVal = typeof row[2]==='number' ? row[2] : pv(row[2]);
+      const skipLabels = ['induló','mérleg','egyenleg','osztalék','befiz','kumulált','profit','kiadás','bevétel'];
+      const isSkip = skipLabels.some(s => colBlow.startsWith(s) || colAlow.startsWith(s));
+      if(colA && colB && kiadVal>0 && !isSkip) {
+        ki.push({d:colA, n:colB, v:kiadVal});
+      }
+
+      // Bevétel tétel: E=dátum, F=név, G=összeg
+      const bevVal = typeof row[6]==='number' ? row[6] : pv(row[6]);
+      if(colF && bevVal>0) {
+        be.push({d:colE, n:colF, v:bevVal});
+      }
+    });
+
+    yr[y]={
+      bev:  bevT||be.reduce((s,i)=>s+i.v,0),
+      kiad: kiadT||ki.reduce((s,i)=>s+i.v,0),
+      profit: profT||(bevT-kiadT),
+      kumProfit: kumT,
+      ki: ki.length?ki:FB[y].ki,
+      be: be.length?be:FB[y].be
+    };
+  });
+  return yr;
+}
+
+function parseMN(raw){
+  const sh=raw['Munkanapló'];
+  if(!sh) return FBMN;
+
+  // Először gyűjtsük össze a dátum+szöveg párokat
+  // Ha A oszlopban dátum van → új bejegyzés kezdődik
+  // Ha A üres de C-ben van szöveg → az előző dátumhoz tartozik, hozzáfűzzük
+
+  const blocks = []; // {date, lines: []}
+  let current = null;
+
+  sh.forEach((row, i)=>{
+    if(i<2) return;
+    const colA = String(row[0]||'').trim();
+    const colC = String(row[2]||'').trim();
+    const colB = String(row[1]||'').trim();
+
+    // Évszám sor átugrása (pl. 2022, 2023, 2025)
+    if(/^\d{4}$/.test(colB) && !colA && !colC) return;
+    if(!colC) return;
+
+    // Dátum parse
+    let displayDate = '';
+    if(colA) {
+      if(colA.includes('T')) {
+        const d = new Date(colA);
+        if(!isNaN(d)) displayDate = `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+      } else {
+        displayDate = colA;
+      }
+    }
+
+    if(displayDate) {
+      // Új dátum → új blokk
+      current = {date: displayDate, lines: [colC]};
+      blocks.push(current);
+    } else if(current) {
+      // Nincs dátum → az előző blokkhoz adjuk
+      current.lines.push(colC);
+    }
+  });
+
+  // Blokkokból bejegyzések
+  const out = [];
+  blocks.forEach(b=>{
+    const fullText = b.lines.join(' ');
+    if(!fullText.trim()) return;
+
+    // Kategorizálás
+    const t = fullText.toLowerCase();
+    let cat='egyéb';
+    if(t.includes('vetés')||t.includes('vetőmag')||t.includes('vetes')||t.includes('vetett')) cat='vetés';
+    else if(t.includes('permetez')||t.includes('permetszer')) cat='permetezés';
+    else if(t.includes('műtrágya')||t.includes('mutragya')||t.includes('pétisó')||t.includes('petiso')||t.includes('karbamid')||t.includes('komplex')||t.includes('starter')||t.includes('lombtrágya')||t.includes('lombtragya')||t.includes('kénes')||t.includes('kenes')||t.includes('pétis')) cat='műtrágya';
+    else if(t.includes('aratás')||t.includes('aratas')) cat='aratás';
+
+    out.push({date: b.date, text: fullText, note:'', cat});
+  });
+
+  return out.length ? out : FBMN;
+}
+
+async function loadData(){
+  try{
+    const r=await fetch(API);
+    const raw=await r.json();
+    D=parseSheets(raw);
+    MN=parseMN(raw);
+  }catch(e){D=FB;MN=FBMN;}
+  document.getElementById('pl').style.display='none';
+  document.getElementById('pc').style.display='block';
+  document.getElementById('ml2').style.display='none';
+  document.getElementById('mc2x').style.display='block';
+  ub();re();rMN();
+}
+
+function ub(){
+  document.getElementById('ba').classList.toggle('on',iA);
+  AY.forEach(y=>document.getElementById('b'+y).classList.toggle('on',!iA&&sel.has(y)));
+  document.getElementById('yh').textContent=iA?'':(gs().join(', '));
+}
+function ta(){iA=true;sel=new Set(AY);ub();re();}
+function ty(y){
+  if(iA){iA=false;sel=new Set([y]);}
+  else{sel.has(y)?sel.delete(y):sel.add(y);if(sel.size===0){iA=true;sel=new Set(AY);}if(sel.size===AY.length)iA=true;}
+  ub();re();
+}
+function re(){rM();rC();rD();}
+
+function rM(){
+  const ys=gs();
+  const bev=ys.reduce((s,y)=>s+(D[y]?.bev||0),0);
+  const ki=ys.reduce((s,y)=>s+(D[y]?.kiad||0),0);
+  const pr=ys.reduce((s,y)=>s+(D[y]?.profit||0),0);
+  const kY=ys.filter(y=>(D[y]?.profit||0)>0);
+  const kV=ys.length===AY.length
+    ? (D[AY[AY.length-2]]?.kumProfit || kY.reduce((s,y)=>s+(D[y]?.profit||0),0))
+    : kY.reduce((s,y)=>s+(D[y]?.profit||0),0);
+  const kS=kY.length?kY.join('–'):'–';
+  document.getElementById('met').innerHTML=`
+    <div class="mc g"><i class="ti ti-trending-up ico"></i><div class="lbl">Bevétel</div><div class="val">${fmt(bev)}</div><div class="sub">összes bevétel</div></div>
+    <div class="mc r"><i class="ti ti-trending-down ico"></i><div class="lbl">Kiadás</div><div class="val">${fmt(ki)}</div><div class="sub">összes kiadás</div></div>
+    <div class="mc ${pr>=0?'g':'r'}"><i class="ti ti-coin ico"></i><div class="lbl">Profit</div><div class="val">${fmt(pr)}</div><div class="sub">nettó eredmény</div></div>
+    <div class="mc b"><i class="ti ti-chart-line ico"></i><div class="lbl">Kumulált profit</div><div class="val">${fmt(kV)}</div><div class="sub">${kS}</div></div>`;
+}
+
+function rC(){
+  const ys=gs();
+  ['c1','c2','c3'].forEach(id=>{if(CH[id]){CH[id].destroy();CH[id]=null;}});
+  CH.c1=new Chart(document.getElementById('c1'),{type:'bar',data:{labels:ys,datasets:[{label:'Bevétel',data:ys.map(y=>D[y]?.bev||0),backgroundColor:'#1D9E7555',borderColor:'#1D9E75',borderWidth:1.5},{label:'Kiadás',data:ys.map(y=>D[y]?.kiad||0),backgroundColor:'#D85A3055',borderColor:'#D85A30',borderWidth:1.5},{label:'Profit',data:ys.map(y=>D[y]?.profit||0),type:'line',borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,tension:0.3,pointRadius:4,pointBackgroundColor:'#378ADD'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>(v/1000000).toFixed(1)+'M',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}});
+  const pp=ys.filter(y=>(D[y]?.profit||0)>0);
+  CH.c2=new Chart(document.getElementById('c2'),{type:'doughnut',data:{labels:pp.length?pp:['–'],datasets:[{data:pp.length?pp.map(y=>D[y].profit):[1],backgroundColor:pp.length?['#1D9E75','#378ADD','#5DCAA5','#85B7EB']:['#ddd'],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:5}}}}});
+  CH.c3=new Chart(document.getElementById('c3'),{type:'bar',data:{labels:ys,datasets:[{label:'Bev%',data:ys.map(y=>{const t=(D[y]?.bev||0)+(D[y]?.kiad||0);return t>0?Math.round((D[y]?.bev||0)/t*100):0;}),backgroundColor:'#1D9E7555',borderColor:'#1D9E75',borderWidth:1.5},{label:'Ki%',data:ys.map(y=>{const t=(D[y]?.bev||0)+(D[y]?.kiad||0);return t>0?Math.round((D[y]?.kiad||0)/t*100):100;}),backgroundColor:'#D85A3055',borderColor:'#D85A30',borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:10}},grid:{display:false}},y:{stacked:true,max:100,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+}
+
+function rD(){
+  const ys=gs();
+  const ak=ys.flatMap(y=>D[y]?.ki||[]);
+  const ab=ys.flatMap(y=>D[y]?.be||[]);
+  // Use the authoritative C28/C29 totals per year, summed across selected years
+  const tK=ys.reduce((s,y)=>s+(D[y]?.kiad||0),0);
+  const tB=ys.reduce((s,y)=>s+(D[y]?.bev||0),0);
+  function sec(items,cls,lbl,tot){
+    const id='s'+Math.random().toString(36).slice(2,7);
+    const rows=items.map(i=>`<div class="it"><span class="id2">${String(i.d).length>5?String(i.d).slice(5):i.d}</span><span class="in2">${i.n}</span><span class="iv ${cls}">${Math.round(i.v).toLocaleString('hu-HU')} Ft</span></div>`).join('');
+    return `<div class="sec"><div class="sh" onclick="tog('${id}',this)"><span class="sl"><i class="ti ${cls==='k'?'ti-trending-down':'ti-trending-up'}"></i>${lbl}</span><span class="sr"><span class="sa ${cls==='k'?'k':'bv'}">${fmt(tot)}</span><i class="ti ti-chevron-down chv"></i></span></div><div class="its" id="${id}">${rows}</div></div>`;
+  }
+  document.getElementById('dc').innerHTML=`
+    <div><div class="colt"><i class="ti ti-trending-down" style="color:var(--rd)"></i> Kiadások tételesen</div>${sec(ak,'k','Összes kiadás',tK)}</div>
+    <div style="margin-top:11px"><div class="colt"><i class="ti ti-trending-up" style="color:var(--gd)"></i> Bevételek tételesen</div>${sec(ab,'bv','Összes bevétel',tB)}</div>`;
+  document.getElementById('ds').innerHTML=`
+    <div class="mc r"><i class="ti ti-trending-down ico"></i><div class="lbl">Összes kiadás</div><div class="val">${fmt(tK)}</div><div class="sub">${ys.join(', ')}</div></div>
+    <div class="mc g"><i class="ti ti-trending-up ico"></i><div class="lbl">Összes bevétel</div><div class="val">${fmt(tB)}</div><div class="sub">${ys.join(', ')}</div></div>`;
+}
+
+function tog(id,h){const el=document.getElementById(id);const o=el.style.display==='block';el.style.display=o?'none':'block';h.classList.toggle('op',!o);}
+
+let mnF='all';
+function fm(c,btn){mnF=c;document.querySelectorAll('.mfb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');rMN();}
+
+function rMN(){
+  const f=mnF==='all'?MN:MN.filter(e=>e.cat===mnF);
+  const byY={};
+  f.forEach(e=>{const y=String(e.date).slice(0,4)||'?';if(!byY[y])byY[y]=[];byY[y].push(e);});
+  const yrs=Object.keys(byY).filter(y=>y!=='?').sort((a,b)=>b-a);
+  let html='';
+  yrs.forEach((yr,idx)=>{
+    const entries=byY[yr].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+    const open=idx===0;
+    html+=`<div class="mys"><div class="myh ${open?'op':''}" onclick="tYr(this)"><span>${yr}</span><span class="cnt">${entries.length} bejegyzés</span><i class="ti ti-chevron-down"></i></div><div class="myb ${open?'on':''}">`;
+    entries.forEach(e=>{
+      const d=String(e.date).length>4?String(e.date).slice(5).replace('.','. '):e.date;
+      html+=`<div class="mne"><div class="mnd">${d}</div><div class="mnb"><div class="mnc ${CL[e.cat]||'ce'}">${CN[e.cat]||'Egyéb'}</div><div class="mnt">${e.text}</div>${e.note?`<div class="mnn">📌 ${e.note}</div>`:''}</div></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  document.getElementById('ml').innerHTML=html||'<p style="color:var(--txt2);padding:1rem;font-family:sans-serif">Nincs találat</p>';
+}
+
+function tYr(h){h.classList.toggle('op');h.nextElementSibling.classList.toggle('on');}
+
+async function loadWeather(){
+  try{
+    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.6167&longitude=16.6167&current=temperature_2m,weathercode,windspeed_10m,relative_humidity_2m&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe%2FBudapest&forecast_days=7');
+    const w=await r.json();
+    const cur=w.current;
+    const daily=w.daily;
+    const temp=Math.round(cur.temperature_2m);
+    const icon=WI[cur.weathercode]||'🌤';
+    const desc=WD[cur.weathercode]||'Változékony';
+    document.getElementById('wm').innerHTML=`<div class="wmt">${temp}° ${icon}</div><div class="wml">Peresznye</div>`;
+
+    const days=daily.time.map((d,i)=>({
+      date:new Date(d),
+      icon:WI[daily.weathercode[i]]||'🌤',
+      max:Math.round(daily.temperature_2m_max[i]),
+      min:Math.round(daily.temperature_2m_min[i]),
+      rain:daily.precipitation_sum[i]||0
+    }));
+
+    const maxRain = Math.max(...days.map(d=>d.rain), 1);
+
+    document.getElementById('wb').innerHTML=`
+      <div class="wcn">
+        <div class="wcte">${temp}°C</div>
+        <div>
+          <div class="wcd">${icon} ${desc}</div>
+          <div class="wcdt">💨 ${Math.round(cur.windspeed_10m)} km/h &nbsp;💧 ${cur.relative_humidity_2m}%</div>
+        </div>
+      </div>
+      <div class="wcf">
+        ${days.map(d=>`<div class="wcd2">
+          <div class="wcdn">${DN[d.date.getDay()]}</div>
+          <div class="wcdi">${d.icon}</div>
+          <div class="wcdt2">${d.max}°</div>
+          <div class="wcdm">${d.min}°</div>
+          <div class="rain-bar-wrap" title="${d.rain} mm">
+            <div class="rain-bar" style="height:${Math.round((d.rain/maxRain)*28)}px"></div>
+            <div class="rain-val">${d.rain>0?d.rain.toFixed(1):'–'}</div>
+          </div>
+        </div>`).join('')}
+      </div>
+      <div class="rain-legend">🌧 Csapadék (mm)</div>`;
+  }catch(e){
+    document.getElementById('wm').innerHTML=`<div class="wmt">–</div><div class="wml">Peresznye</div>`;
+    document.getElementById('wb').innerHTML='<div style="text-align:center;padding:20px;font-family:sans-serif;color:var(--txt2)">Nem sikerült betölteni</div>';
+  }
+}
+
+function sp(id,btn){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('p'+id).classList.add('on');btn.classList.add('on');}
+
+loadData();
+loadWeather();
+</script>
+</body>
+</html>
