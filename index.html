@@ -97,7 +97,8 @@ body{font-family:Georgia,serif;background:var(--bg);color:var(--txt);min-height:
 .wcdn{font-size:10px;color:var(--txt2);font-weight:700;text-transform:uppercase;margin-bottom:3px}
 .wcdi{font-size:17px;margin-bottom:2px}
 .wcdt2{font-size:13px;font-weight:700}
-.wcdm{font-size:11px;color:var(--txt2)}
+.two-charts{display:grid;grid-template-columns:1fr;gap:11px;margin-bottom:11px}
+@media(min-width:520px){.two-charts{grid-template-columns:1fr 1fr}}
 .rain-bar-wrap{display:flex;flex-direction:column;align-items:center;margin-top:5px;height:42px;justify-content:flex-end}
 .rain-bar{width:14px;background:#378ADD;border-radius:3px 3px 0 0;min-height:0;transition:height .3s}
 .rain-val{font-size:9px;color:var(--bd);font-family:sans-serif;font-weight:700;margin-top:2px;white-space:nowrap}
@@ -134,9 +135,9 @@ body{font-family:Georgia,serif;background:var(--bg);color:var(--txt);min-height:
         <div class="lg"><span><span class="ld" style="background:#1D9E75"></span>Bevétel</span><span><span class="ld" style="background:#D85A30"></span>Kiadás</span><span><span class="ld" style="background:#378ADD"></span>Profit</span></div>
         <div style="position:relative;width:100%;height:220px"><canvas id="c1"></canvas></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px">
-        <div class="cc" style="margin-bottom:0"><div class="ct">Profit megoszlása</div><div style="position:relative;height:155px"><canvas id="c2"></canvas></div></div>
-        <div class="cc" style="margin-bottom:0"><div class="ct">Bev/Kiad arány</div><div style="position:relative;height:155px"><canvas id="c3"></canvas></div></div>
+      <div class="two-charts">
+        <div class="cc" style="margin-bottom:0"><div class="ct">Profit megoszlása</div><div style="position:relative;height:180px"><canvas id="c2"></canvas></div></div>
+        <div class="cc" style="margin-bottom:0"><div class="ct">Bev/Kiad arány</div><div style="position:relative;height:180px"><canvas id="c3"></canvas></div></div>
       </div>
       <div id="dc"></div>
       <div class="mc2" id="ds"></div>
