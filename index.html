@@ -126,6 +126,7 @@ body{font-family:Georgia,serif;background:var(--bg);color:var(--txt);min-height:
         <button class="yb" id="b2024" onclick="ty('2024')">2024</button>
         <button class="yb" id="b2025" onclick="ty('2025')">2025</button>
         <button class="yb" id="b2026" onclick="ty('2026')">2026</button>
+        <button class="yb" id="b2027" onclick="ty('2027')">2027</button>
         <span class="yh" id="yh"></span>
       </div>
       <div class="mc4" id="met"></div>
@@ -172,7 +173,7 @@ body{font-family:Georgia,serif;background:var(--bg);color:var(--txt);min-height:
 
 <script>
 const API='https://script.google.com/macros/s/AKfycbygopBE6O428DcD5gAzo2JT9dJ_eBvG1XdlCc15PU2h0LTfEIdHxEwWGmxzPDgQnk_7/exec';
-const AY=['2023','2024','2025','2026'];
+const AY=['2023','2024','2025','2026','2027'];
 const CL={vetés:'cve',permetezés:'cp',műtrágya:'cv',aratás:'ca',egyéb:'ce'};
 const CN={vetés:'Vetés',permetezés:'Permetezés',műtrágya:'Műtrágya',aratás:'Aratás',egyéb:'Egyéb'};
 const WI={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',80:'🌦',81:'🌧',95:'⛈'};
@@ -183,7 +184,8 @@ const FB={
   '2023':{bev:5774137,kiad:4282843,profit:1491294,ki:[{d:'2022.10.22',n:'Komplex Laci – 2×700 kg',v:590000},{d:'2022.12.27',n:'Pétisó 27% – 30.000 kg',v:900000},{d:'2023.02.11',n:'Kénes műtrágya Laci',v:274000},{d:'2023.04.24',n:'Starter – 60 kg, Komplex',v:406905},{d:'2023.05.03',n:'Vetés Borhi + borravaló',v:50000},{d:'2023.06.02',n:'Permetszer kukorica',v:106500},{d:'2023.11.03',n:'Kukorica szárítás',v:859033},{d:'2023.12.31',n:'Banki költségek',v:14286}],be:[{d:'2022.08.23',n:'Búza – Hombár Kft.',v:1996645},{d:'2022.11.24',n:'Kukorica – MEDOSZ Kft.',v:2516909},{d:'2023.05.28',n:'Fiatal mező. támogatás',v:307236}]},
   '2024':{bev:6681262,kiad:3836003,profit:2845259,ki:[{d:'2023.08.16',n:'NPK – 25q, Pétisó – 36q',v:1043000},{d:'2024.04.10',n:'Vetőmag + Csávázás',v:382632},{d:'2024.05.10',n:'Szója vetőmag Altona',v:300038},{d:'2024.11.06',n:'Kukorica szárítás',v:605615},{d:'2024.12.31',n:'Banki költségek',v:9734}],be:[{d:'2023.10.24',n:'Kukorica – MEDOSZ Kft.',v:3901464},{d:'2023.11.02',n:'Szója – Lagerhaus Kft.',v:1251264}]},
   '2025':{bev:6955629,kiad:3635847,profit:3319782,ki:[{d:'2024.10.29',n:'Komplex Milán – 24q',v:504000},{d:'2025.04.08',n:'Kukorica vetőmag',v:320000},{d:'2025.10.18',n:'Kukorica szárítás',v:862787},{d:'2025.12.31',n:'Banki költségek',v:10180}],be:[{d:'2025.09.07',n:'Búza – GSD Center Kft.',v:1860824},{d:'2024.10.21',n:'Kukorica – MEDOSZ Kft.',v:3875010}]},
-  '2026':{bev:0,kiad:2054917,profit:-2054917,ki:[{d:'2025.09.19',n:'Műtrágya IKR – 80q',v:1254000},{d:'2026.04.11',n:'Napraforgó vetés Bence',v:90000},{d:'2026.05.07',n:'Permetszer',v:102500}],be:[]}
+  '2026':{bev:6685329,kiad:2975400,profit:3709929,kumProfit:11376666,ki:[{d:'2025.09.19',n:'Műtrágya beszerzés IKR – 80q',v:1254000},{d:'2026.03.19',n:'Komplex, Starter – Medosz',v:210000},{d:'2026.04.13',n:'Napraforgó vegyszer Medosz',v:236239},{d:'2026.05.20',n:'Napraforgó vetőmag',v:220000},{d:'2026.07.27',n:'Műtrágyaszóró vásárlása',v:200000},{d:'2026.09.22',n:'Aratás napraforgó',v:200000},{d:'2026.12.31',n:'Banki költségek',v:9057}],be:[{d:'2026.08.07',n:'Búza – GSD Center Kft.',v:2689440},{d:'2026.09.23',n:'BISS előleg',v:352444},{d:'2026.09.23',n:'CRISS előleg',v:227443},{d:'2026.09.23',n:'Napraforgó – MEDOSZ Kft.',v:3416002}]},
+  '2027':{bev:0,kiad:1447827,profit:-1447827,kumProfit:9928839,ki:[{d:'2026.08.18',n:'Műtrágya beszerzés IKR – 78q',v:1291720},{d:'2026.08.18',n:'Bab Munkabér Milán',v:150000},{d:'2027.12.31',n:'Banki költségek',v:6107}],be:[]}
 };
 const FBMN=[
   {date:'2022.10.27',text:'Búza vetés (Nádor) – 1.000 kg – 4,48 ha',cat:'vetés'},
@@ -202,6 +204,9 @@ const FBMN=[
   {date:'2026.05.07',text:'Napraforgo: Acat ellen foltokban permeteztünk, ExpressTM 22,5 g/ha + Trend® 90 0,1%.',cat:'permetezés'},
   {date:'2026.05.07',text:'Búza műtrágyaszórás 1,5 q/ha eső előtt, 20 mm esett utána',cat:'műtrágya'},
   {date:'2026.05.18',text:'Búza permetezés: Osiris Revy 5L (1 l/ha), gombaölő fuzárium ellen + rovarölő',cat:'permetezés'},
+  {date:'2026.07.04',text:'Búza aratás (Laci – GSD) Szofru + Geniusz 76q/ha',cat:'aratás'},
+  {date:'2026.09.22',text:'Napraforgó aratás Borhi – 3,1 t/ha, 6,6 víz, 44,5 olajtartalom, pe233 fajta',cat:'aratás'},
+  {date:'2026.09.30',text:'Komplex szórás napraforgó tarlóra búza elé (2q/ha 9:25:25) + 1q/ha foszfor + 1q/ha kálium',note:'Karbamid kell őszre a focipályára 100kg = 46kg N, számla után Katalinnak küldjem el.',cat:'műtrágya'},
 ];
 
 let D={}, MN=[], sel=new Set(AY), iA=true, cM='all', CH={};
@@ -391,7 +396,7 @@ function rC(){
   ['c1','c2','c3'].forEach(id=>{if(CH[id]){CH[id].destroy();CH[id]=null;}});
   CH.c1=new Chart(document.getElementById('c1'),{type:'bar',data:{labels:ys,datasets:[{label:'Bevétel',data:ys.map(y=>D[y]?.bev||0),backgroundColor:'#1D9E7555',borderColor:'#1D9E75',borderWidth:1.5},{label:'Kiadás',data:ys.map(y=>D[y]?.kiad||0),backgroundColor:'#D85A3055',borderColor:'#D85A30',borderWidth:1.5},{label:'Profit',data:ys.map(y=>D[y]?.profit||0),type:'line',borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,tension:0.3,pointRadius:4,pointBackgroundColor:'#378ADD'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>(v/1000000).toFixed(1)+'M',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}});
   const pp=ys.filter(y=>(D[y]?.profit||0)>0);
-  CH.c2=new Chart(document.getElementById('c2'),{type:'doughnut',data:{labels:pp.length?pp:['–'],datasets:[{data:pp.length?pp.map(y=>D[y].profit):[1],backgroundColor:pp.length?['#1D9E75','#378ADD','#5DCAA5','#85B7EB']:['#ddd'],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:5}}}}});
+  CH.c2=new Chart(document.getElementById('c2'),{type:'doughnut',data:{labels:pp.length?pp:['–'],datasets:[{data:pp.length?pp.map(y=>D[y].profit):[1],backgroundColor:pp.length?['#1D9E75','#378ADD','#5DCAA5','#85B7EB','#0F6E56']:['#ddd'],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:5}}}}});
   CH.c3=new Chart(document.getElementById('c3'),{type:'bar',data:{labels:ys,datasets:[{label:'Bev%',data:ys.map(y=>{const t=(D[y]?.bev||0)+(D[y]?.kiad||0);return t>0?Math.round((D[y]?.bev||0)/t*100):0;}),backgroundColor:'#1D9E7555',borderColor:'#1D9E75',borderWidth:1.5},{label:'Ki%',data:ys.map(y=>{const t=(D[y]?.bev||0)+(D[y]?.kiad||0);return t>0?Math.round((D[y]?.kiad||0)/t*100):100;}),backgroundColor:'#D85A3055',borderColor:'#D85A30',borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:10}},grid:{display:false}},y:{stacked:true,max:100,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
 }
 
